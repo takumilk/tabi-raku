@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+  <meta charset="UTF-8">
+  <title>TabiRaku</title>
+    <!--bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    
+    <!--google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Damion&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap" rel="stylesheet">
+    <!--style.css-->
+    <link rel="stylesheet" href="/style.css">
+    
+    <!--favicon/アイコン-->
+    <link rel="icon" href="/favicon2.ico">
+    <script src="https://kit.fontawesome.com/1c80078f58.js" crossorigin="anonymous"></script>
+    <!--スマホサイト用viewport-->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+  
+<body>
+<div id="wrapper" class="all">
+ <div class="pt-2" >
+          <header>
+            <div class="picture"style="height: 20%;">
+                <img  src="/logo.png" alt="logo" title="logo">
+                </img>
+            </div>
+          </header>
+         <main>
+
+          <!--データベースからデータをとってくる！-->
+          <form action="/confirm" method="get">
+             <h1><%= @trip.planname %></h1> 
+            
+              <p> 計画者:
+              <%= @trip.planner %>
+              </p>
+
+               <p> 目的:
+              <%= @trip.purpose %>    
+              </p>
+               <p> 集合場所:
+              <%= @trip.meetplace %>    
+              </p>
+               <p> 参加者:
+              <% @participents.each do |participent| %>
+              <br>
+              <%= participent.name %>    
+              <% end %>  
+              </p>
+              <p> 行程:
+              <% @contents.each do |content| %>
+              <br>
+              ↓
+              <br>
+              <%= content.activity %>
+              <% end %>
+              </p>
+              <p> 旅の注意事項:
+              <%= @trip.precaution %>    
+              </p>
+            </form> 
+            
+        <div class="share">
+           <a class="btn-line btn--radius" href="https://social-plugins.line.me/lineit/share?url=https://intense-springs-61455.herokuapp.com/share/<%= @trip.id %>" target="_blank" rel="nofollow">LINEでシェアする</a>
+           <a class="btn-twitter btn--radius" href="https://twitter.com/share?url=https://intense-springs-61455.herokuapp.com/share/<%= @trip.id %>/&text=<%= @trip.planname %>計画書" rel="nofollow" target="_blank">Twitterでシェアする</a>
+          <div class="form-group ">
+            <input id="CopyTarget" value="https://intense-springs-61455.herokuapp.com/share/<%= @trip.id %>" type="text">
+            <button type="button" class="btn btn--orange btn--radius btn-outline-success btn-copy" onclick="CopyToClipboard()" data-toggle="tooltip" data-placement="top" title="リンクをコピー">
+              <i class="fas fa-copy"><a class="ml-3" style="font-family: 'Mochiy Pop P One', sans-serif;">リンクをコピー</a></i>
+            </button>
+          </div>
+         </div>
+         
+          <script>
+            function CopyToClipboard() {
+              // コピー対象をJavaScript上で変数として定義する
+              var copyTarget = document.getElementById("CopyTarget");
+              // コピー対象のテキストを選択する
+              copyTarget.select();
+              // 選択しているテキストをクリップボードにコピーする
+              document.execCommand("copy");
+              // コピーをお知らせする
+              alert("コピーしました : " + copyTarget.value);
+            }
+          </script>
+          
+        </main> 
+ </div>
+   <footer class="bg-dark text-white"  >
+    <div class="under">© 2022 TsuboTsubo</div>
+   </footer>
+</div>
+</body>
+</html>
